@@ -59,9 +59,7 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * Return a clone of this object
-     *
-     * @return NodeInterface
+     * @inheritdoc
      */
     public function getClone()
     {

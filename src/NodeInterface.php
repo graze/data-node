@@ -12,7 +12,7 @@ interface NodeInterface
     /**
      * Return a clone of this object
      *
-     * @return NodeInterface
+     * @return static
      */
     public function getClone();
 }
