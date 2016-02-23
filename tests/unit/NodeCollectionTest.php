@@ -96,13 +96,16 @@ class NodeCollectionTest extends TestCase
     {
         $first = m::mock(NodeInterface::class);
         $second = m::mock(NodeInterface::class);
+        $third = m::mock(NodeInterface::class);
 
         $first->shouldReceive('thisOne')
               ->andReturn(false);
         $second->shouldReceive('thisOne')
                ->andReturn(true);
+        $third->shouldReceive('thosOne')
+              ->andReturn(true);
 
-        $collection = new NodeCollection([$first, $second]);
+        $collection = new NodeCollection([$first, $second, $third]);
 
         static::assertSame($second, $collection->first(function ($item) {
             return $item->thisOne();
@@ -113,15 +116,18 @@ class NodeCollectionTest extends TestCase
     {
         $first = m::mock(NodeInterface::class);
         $second = m::mock(NodeInterface::class);
+        $third = m::mock(NodeInterface::class);
 
         $first->shouldReceive('thisOne')
               ->andReturn(true);
         $second->shouldReceive('thisOne')
-               ->andReturn(false);
+               ->andReturn(true);
+        $third->shouldReceive('thisOne')
+              ->andReturn(false);
 
-        $collection = new NodeCollection([$first, $second]);
+        $collection = new NodeCollection([$first, $second, $third]);
 
-        static::assertSame($first, $collection->last(function ($item) {
+        static::assertSame($second, $collection->last(function ($item) {
             return $item->thisOne();
         }));
     }
@@ -147,7 +153,7 @@ class NodeCollectionTest extends TestCase
         }));
     }
 
-    public function tesLastWithCallbackWillReturnDefaultIfNoMatchesAreFound()
+    public function testLastWithCallbackWillReturnDefaultIfNoMatchesAreFound()
     {
         $first = m::mock(NodeInterface::class);
         $second = m::mock(NodeInterface::class);
@@ -166,5 +172,26 @@ class NodeCollectionTest extends TestCase
         static::assertNull($collection->last(function ($item) {
             return $item->thisOne();
         }));
+    }
+
+    public function testCloneWillCloneTheChildObjects()
+    {
+        $first = m::mock(NodeInterface::class);
+        $second = m::mock(NodeInterface::class);
+
+        $collection = new NodeCollection([$first, $second]);
+        $collection2 = $collection->getClone();
+
+        static::assertNotSame($collection, $collection2);
+        static::assertEquals($collection->count(), $collection2->count());
+        for ($i = 0; $i < $collection->count(); $i++) {
+            static::assertNotSame($collection->getAll()[$i], $collection2->getAll()[$i]);
+        }
+    }
+
+    public function testToString()
+    {
+        $collection = new NodeCollection();
+        static::assertEquals("NodeCollection", "$collection");
     }
 }
