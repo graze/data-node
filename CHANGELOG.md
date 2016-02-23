@@ -2,22 +2,10 @@
 
 All Notable changes to `data-node` will be documented in this file
 
-## [Version] - YYYY-MM-DD
+## v1.0 - 2016-02-22
+
+- Initial Release
+- PHP 5.6/7/hhvm compatible
 
 ### Added
-- Nothing
-
-### Changed
-- Nothing
-
-### Fixed
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
+- `NodeCollection` stores a set of `NodeInterface`'s
