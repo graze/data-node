@@ -6,6 +6,7 @@ use Graze\DataNode\NodeCollection;
 use Graze\DataNode\NodeInterface;
 use Graze\DataNode\Test\TestCase;
 use Graze\DataStructure\Collection\Collection;
+use InvalidArgumentException;
 use Mockery as m;
 
 class NodeCollectionTest extends TestCase
@@ -26,10 +27,7 @@ class NodeCollectionTest extends TestCase
     {
         $node = m::mock('Graze\Extensible\ExtensibleInterface');
 
-        static::setExpectedException(
-            'InvalidArgumentException',
-            "The specified value does not implement NodeInterface"
-        );
+        $this->expectException(InvalidArgumentException::class);
 
         $collection = new NodeCollection();
         $collection->add($node);

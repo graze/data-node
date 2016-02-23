@@ -67,8 +67,8 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @param callable   $fn
-     * @param mixed|null $default
+     * @param callable|null $fn
+     * @param mixed|null    $default
      *
      * @return NodeInterface|null
      */
@@ -88,8 +88,8 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @param callable   $fn
-     * @param mixed|null $default
+     * @param callable|null $fn
+     * @param mixed|null    $default
      *
      * @return NodeInterface|null
      */
