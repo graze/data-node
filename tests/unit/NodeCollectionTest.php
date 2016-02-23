@@ -43,7 +43,7 @@ class NodeCollectionTest extends TestCase
         $collection = new NodeCollection();
         $collection->add($node);
 
-        $collection->apply(function (&$item) {
+        $collection->apply(function ($item) {
             $item->someMethod();
         });
 

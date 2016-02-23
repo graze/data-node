@@ -11,19 +11,19 @@ interface NodeCollectionInterface extends CollectionInterface, NodeInterface
      *
      * @return NodeCollectionInterface
      */
-    public function apply($fn);
+    public function apply(callable $fn);
 
     /**
-     * @param callable      $fn
-     * @param NodeInterface $default
+     * @param callable|null      $fn
+     * @param NodeInterface|null $default
      *
      * @return NodeInterface|null
      */
     public function first(callable $fn = null, $default = null);
 
     /**
-     * @param callable      $fn
-     * @param NodeInterface $default
+     * @param callable|null      $fn
+     * @param NodeInterface|null $default
      *
      * @return NodeInterface|null
      */

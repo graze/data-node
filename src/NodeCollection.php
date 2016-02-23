@@ -15,7 +15,7 @@ use InvalidArgumentException;
 class NodeCollection extends Collection implements NodeCollectionInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function add($value)
     {
@@ -26,9 +26,9 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function apply($fn)
+    public function apply(callable $fn)
     {
         foreach ($this->items as &$item) {
             $out = call_user_func($fn, $item);
@@ -67,10 +67,7 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @param callable|null $fn
-     * @param mixed|null    $default
-     *
-     * @return NodeInterface|null
+     * @inheritdoc
      */
     public function first(callable $fn = null, $default = null)
     {
@@ -88,10 +85,7 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @param callable|null $fn
-     * @param mixed|null    $default
-     *
-     * @return NodeInterface|null
+     * @inheritdoc
      */
     public function last(callable $fn = null, $default = null)
     {
