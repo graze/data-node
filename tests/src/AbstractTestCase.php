@@ -13,6 +13,6 @@
 
 namespace Graze\DataNode\Test;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
 }
