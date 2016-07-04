@@ -1,4 +1,15 @@
 <?php
+/**
+ * This file is part of graze/data-node
+ *
+ * Copyright (c) 2016 Nature Delivered Ltd. <https://www.graze.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license https://github.com/graze/data-node/blob/master/LICENSE.md
+ * @link    https://github.com/graze/data-node
+ */
 
 namespace Graze\DataNode;
 
@@ -45,10 +56,13 @@ class IteratorNode extends IteratorIterator implements IteratorNodeInterface
     /**
      * Return a clone of this object
      *
+     * @note This will traverse the current iterator source to produce a clone, potentially moving past the point
+     *       required
+     *
      * @return static
      */
     public function getClone()
     {
-        return clone $this;
+        return new IteratorNode(iterator_to_array($this));
     }
 }

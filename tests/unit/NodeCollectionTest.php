@@ -11,16 +11,16 @@
  * @link    https://github.com/graze/data-node
  */
 
-namespace Graze\DataNode\Test\Unit\Node;
+namespace Graze\DataNode\Test\Unit;
 
 use Graze\DataNode\NodeCollection;
 use Graze\DataNode\NodeInterface;
-use Graze\DataNode\Test\TestCase;
+use Graze\DataNode\Test\AbstractTestCase;
 use Graze\DataStructure\Collection\Collection;
 use InvalidArgumentException;
 use Mockery as m;
 
-class NodeCollectionTest extends TestCase
+class NodeCollectionAbstractTest extends AbstractTestCase
 {
     public function testIsCollection()
     {

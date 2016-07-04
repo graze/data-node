@@ -26,7 +26,9 @@ use InvalidArgumentException;
 class NodeCollection extends Collection implements NodeCollectionInterface
 {
     /**
-     * @inheritdoc
+     * @param mixed $value
+     *
+     * @return $this
      */
     public function add($value)
     {
@@ -37,7 +39,9 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @inheritdoc
+     * @param callable $fn
+     *
+     * @return $this
      */
     public function apply(callable $fn)
     {
@@ -78,7 +82,12 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @inheritdoc
+     * Retrieve the first element that matches the optional callback
+     *
+     * @param callable|null $fn
+     * @param mixed|null    $default
+     *
+     * @return mixed|null
      */
     public function first(callable $fn = null, $default = null)
     {
@@ -96,7 +105,12 @@ class NodeCollection extends Collection implements NodeCollectionInterface
     }
 
     /**
-     * @inheritdoc
+     * Receive the last element that matches the optional callback
+     *
+     * @param callable|null $fn
+     * @param mixed|null    $default
+     *
+     * @return mixed|null
      */
     public function last(callable $fn = null, $default = null)
     {

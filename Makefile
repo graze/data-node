@@ -4,10 +4,10 @@ DOCKER ?= $(shell which docker)
 DOCKER_REPOSITORY := graze/data-node
 VOLUME := /opt/graze/data-node
 VOLUME_MAP := -v $$(pwd):${VOLUME}
-DOCKER_RUN := ${DOCKER} run --rm -t ${VOLUME_MAP} ${DOCKER_REPOSITORY}:latest
+DOCKER_RUN := ${DOCKER} run --rm -it ${VOLUME_MAP} ${DOCKER_REPOSITORY}:latest
 
 .PHONY: install composer clean help run
-.PHONY: test lint lint-fix test-unit test-integration test-matrix test-coverage test-coverage-clover
+.PHONY: test lint lint-fix test-unit test-matrix test-coverage test-coverage-clover
 
 .SILENT: help
 
@@ -31,16 +31,16 @@ run: ## Run a command on the docker image
 
 
 test: ## Run the unit and integration testsuites.
-test: lint test-unit test-integration
+test: lint test-unit
 
 lint: ## Run phpcs against the code.
-	$(DOCKER_RUN) composer lint --ansi
+	$(DOCKER_RUN) vendor/bin/phpcs -p --warning-severity=0 src/ tests/
 
 lint-fix: ## Run phpcsf and fix possible lint errors.
-	$(DOCKER_RUN) composer lint:auto-fix --ansi
+	$(DOCKER_RUN) vendor/bin/phpcbf -p src/ tests/
 
 test-unit: ## Run the unit testsuite.
-	$(DOCKER_RUN) composer test:unit --ansi
+	$(DOCKER_RUN) vendor/bin/phpunit --colors=always --testsuite unit
 
 test-matrix: ## Run the unit tests against multiple targets.
 	${DOCKER} run --rm -t ${VOLUME_MAP} -w ${VOLUME} php:5.6-cli \
@@ -50,14 +50,14 @@ test-matrix: ## Run the unit tests against multiple targets.
 	${DOCKER} run --rm -t ${VOLUME_MAP} -w ${VOLUME} diegomarangoni/hhvm:cli \
     vendor/bin/phpunit --testsuite unit
 
-test-integration: ## Run the integration testsuite.
-	$(DOCKER_RUN) vendor/bin/phpunit --testsuite integration
+test-coverage: ## Run all tests and output coverage to the console
+	$(DOCKER_RUN) vendor/bin/phpunit --coverage-text
 
-test-coverage: ## Run all tests and output coverage to the console.
-	$(DOCKER_RUN) composer test:coverage --ansi
+test-coverage-clover: ## Run all tests and output clover coverage to file
+	$(DOCKER_RUN) vendor/bin/phpunit --coverage-clover=./tests/report/coverage.clover
 
-test-coverage-clover: ## Run all tests and output clover coverage to file.
-	$(DOCKER_RUN) composer test:coverage-clover --ansi
+test-coverage-html: ## Run all tests and output html coverage to a folder
+	$(DOCKER_RUN) vendor/bin/phpunit --coverage-html=./tests/report
 
 
 
@@ -65,4 +65,4 @@ help: ## Show this help message.
 	echo "usage: make [target] ..."
 	echo ""
 	echo "targets:"
-	fgrep --no-filename "##" $(MAKEFILE_LIST) | fgrep --invert-match $$'\t' | sed -e 's/: ## / - /'
+	egrep '^(.+)\:\ ##\ (.+)' ${MAKEFILE_LIST} | column -t -c 2 -s ':#' | sort
