@@ -16,13 +16,13 @@ Data Nodes for use with [Data\Flow](https://github.com/graze/data-flow)
 Via Composer
 
 ``` bash
-$ composer require graze/data-node
+composer require graze/data-node
 ```
 
 ## Testing
 
 ```bash
-$ make test
+make test
 ```
 
 ## Contributing
