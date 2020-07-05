@@ -12,15 +12,14 @@ DOCKER_RUN := ${DOCKER} run --rm -it ${VOLUME_MAP} ${DOCKER_REPOSITORY}:latest
 .SILENT: help
 
 install: ## Download the dependencies then build the image :rocket:.
-	make 'composer-install --optimize-autoloader --ignore-platform-reqs'
+	make 'composer-install --optimize-autoloader'
 	$(DOCKER) build --tag ${DOCKER_REPOSITORY}:latest .
 
 composer-%: ## Run a composer command, `make "composer-<command> [...]"`.
 	${DOCKER} run -t --rm \
-        -v $$(pwd):/usr/src/app \
-        -v ~/.composer:/root/composer \
-        -v ~/.ssh:/root/.ssh:ro \
-        graze/composer --ansi --no-interaction $* $(filter-out $@,$(MAKECMDGOALS))
+        -v $$(pwd):/app \
+        -v ~/.composer:/tmp \
+        composer --ansi --no-interaction $* $(filter-out $@,$(MAKECMDGOALS))
 
 clean: ## Clean up any images.
 	$(DOCKER) rmi ${DOCKER_REPOSITORY}:latest
