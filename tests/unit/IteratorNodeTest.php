@@ -20,7 +20,7 @@ use Graze\DataNode\Test\AbstractTestCase;
 use Iterator;
 use Traversable;
 
-class IteratorNodeText extends AbstractTestCase
+class IteratorNodeTest extends AbstractTestCase
 {
     public function testImplements()
     {
