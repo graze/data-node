@@ -20,7 +20,7 @@ use Graze\DataStructure\Collection\Collection;
 use InvalidArgumentException;
 use Mockery as m;
 
-class NodeCollectionAbstractTest extends AbstractTestCase
+class NodeCollectionTest extends AbstractTestCase
 {
     public function testIsCollection()
     {
